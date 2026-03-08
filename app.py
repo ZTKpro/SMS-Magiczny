@@ -115,11 +115,11 @@ def api_send():
     # Wyślij przez SMSAPI
     resp = requests.post(
         "https://api.smsapi.pl/sms.do",
-        headers={"Authorization": f"Bearer {SMSAPI_TOKEN}"},
         params={
             "to": phone,
             "message": text,
-            "from": SMSAPI_SENDER,
+            "from": "2way",
+            "encoding": "utf-8",
             "format": "json",
         },
         timeout=10,
