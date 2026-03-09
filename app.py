@@ -161,6 +161,30 @@ def api_conversations():
 def api_messages(phone):
     return jsonify(conversations.get(phone, []))
 
+@app.route("/reply")
+@login_required
+def reply_page():
+    folder = "replies"
+    replies = {}
+
+    if os.path.exists(folder):
+        for file in os.listdir(folder):
+            if file.endswith(".txt"):
+                with open(os.path.join(folder, file), "r", encoding="utf-8") as f:
+                    replies[file] = f.read()
+
+    html = "<h2>Gotowe odpowiedzi SMS</h2>"
+
+    for name, text in replies.items():
+        html += f"""
+        <div style="margin-bottom:20px">
+            <h3>{name}</h3>
+            <textarea style="width:500px;height:120px">{text}</textarea>
+        </div>
+        """
+
+    return html
+
 # ─── SSE – strumień zdarzeń w czasie rzeczywistym ────────────────────────────
 @app.route("/api/events")
 @login_required
