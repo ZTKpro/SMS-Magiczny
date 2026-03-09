@@ -174,7 +174,7 @@ def reply_page():
 
     html = f"""
     <h2>Gotowe odpowiedzi SMS</h2>
-    <textarea style="width:700px;height:1600px">{content}</textarea>
+    <textarea style="width:1400px;height:1600px">{content}</textarea>
     """
 
     return html
