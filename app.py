@@ -164,24 +164,18 @@ def api_messages(phone):
 @app.route("/reply")
 @login_required
 def reply_page():
-    folder = "replies"
-    replies = {}
+    file_path = "reply.txt"
 
-    if os.path.exists(folder):
-        for file in os.listdir(folder):
-            if file.endswith(".txt"):
-                with open(os.path.join(folder, file), "r", encoding="utf-8") as f:
-                    replies[file] = f.read()
+    if not os.path.exists(file_path):
+        return "<h2>Brak pliku reply.txt</h2>"
 
-    html = "<h2>Gotowe odpowiedzi SMS</h2>"
+    with open(file_path, "r", encoding="utf-8") as f:
+        content = f.read()
 
-    for name, text in replies.items():
-        html += f"""
-        <div style="margin-bottom:20px">
-            <h3>{name}</h3>
-            <textarea style="width:500px;height:120px">{text}</textarea>
-        </div>
-        """
+    html = f"""
+    <h2>Gotowe odpowiedzi SMS</h2>
+    <textarea style="width:700px;height:500px">{content}</textarea>
+    """
 
     return html
 
